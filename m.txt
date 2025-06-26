@@ -1,0 +1,140 @@
+mscroll
+
+<Grid Height="450" Width="800">
+    <StackPanel>
+        <Label Background="#546F94" Width="800" Height="60" FontFamily="Candara" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <!-- Logo -->
+                <Image Source="/logo/Мозаика.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="60" Height="60"/>
+
+                <!-- Text logo -->
+                <TextBlock VerticalAlignment="Center" Foreground="#ABCFCE" Height="80">Мозайка</TextBlock>
+            </StackPanel>
+        </Label>
+    </StackPanel>
+    <ScrollViewer Height="270" Width="780">
+        <ItemsControl x:Name="ProductList">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1" Margin="0,0,0,10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <!-- Левый столбец -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Правый столбец -->
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Основная информация о продукте слева -->
+                            <StackPanel Grid.Column="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Candara" FontSize="20" Text="{Binding tip_materiala}" />
+                                    <TextBlock FontFamily="Candara" FontSize="20">|</TextBlock>
+                                    <TextBlock FontFamily="Candara" FontSize="20" Text="{Binding naimenovanie_materiala}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Candara" FontSize="17" Text="{Binding minimalnoe_kolichestvo}" />
+                                </StackPanel>
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Candara" FontSize="17" Text="{Binding kolichestvo_na_sklade}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock FontFamily="Candara" FontSize="17" Text="{Binding edinica_izmereniya}" />
+                                    </StackPanel>
+                                </StackPanel>
+                               
+
+                               
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontFamily="Candara" FontSize="17" Text="{Binding stoimost_partii}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Информация справа (например, время производства) -->
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock FontFamily="Candara" FontSize="20">Время изготовления:</TextBlock>
+                                <TextBlock FontFamily="Candara" FontSize="17" Text="24" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </ScrollViewer>
+    <Grid VerticalAlignment="Top" Height="50" Margin="0,360,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Height="40" FontFamily="Candara" FontSize="14" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#546F94" Foreground="#ABCFCE" Click="Button_Click">Редактировать</Button>
+        <Button Grid.Column="1" Height="40" FontFamily="Candara" FontSize="14" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#546F94" Foreground="#ABCFCE">Добавить</Button>
+        <Button Grid.Column="2" Height="40" FontFamily="Candara" FontSize="14" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#546F94" Foreground="#ABCFCE">Удалить</Button>
+    </Grid>
+
+</Grid>
+
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        InitializeComponent();
+        LoadProduct();
+    }
+
+    public void LoadProduct()
+    {
+        try
+        {
+            using (var context = new mozaikaEntities2())
+            {
+                var products = context.Materials_import.ToList();
+                ProductList.ItemsSource = products;
+            }
+        }
+        catch
+        {
+            MessageBox.Show("Не удалось загрузить данные");
+        }
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        MainWindow redact = new MainWindow();
+        redact.Show();
+
+
+    }
+}
+
+
+
+scscscscscscscscs
+
+
+ public partial class MainWindow : Window
+ {
+     public MainWindow()
+     {
+         InitializeComponent();
+
+         LoadMaterials();
+     }
+
+     private void LoadMaterials()
+     {
+         using (var context = new mozaikaEntities2())
+         {
+             var materials = context.Materials_import.ToList();
+             dataGrid.ItemsSource = materials;
+         }
+     }
+ }
+
+
+
+
